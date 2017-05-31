@@ -37,11 +37,22 @@ func TestHexToBase64(t *testing.T) {
 
 func TestDecodeSingleByteXOR(t *testing.T) {
   in := "1b37373331363f78151b7f2b783431333d"
-  in += "78397828372d363c78373e783a393b3736"
+  in += "78397828372D363C78373E783a393b3736"
 
-  key, _, err := DecodeSingleByteXOR(in)
-  if err != nil || key != 'x' {
+  _, key, text, err := DecodeSingleByteXOR(in)
+  if err != nil || key != 'X' {
     t.Errorf("TestDecodeSingleByteXOR FAILED\n")
   }
+  fmt.Printf("Possible Outcome - Encryption key - %v, Decoded text - %v\n",key,text)
   fmt.Printf("TestDecodeSingleByteXOR - Succeeded\n")
+}
+
+func TestDetectSingleCharacterXOR(t *testing.T) {
+  file := "4.txt"
+
+  _, _, err := DetectSingleCharacterXOR(file)
+  if err != nil {
+    t.Errorf("TestDetectSingleCharacterXOR FAILED\n")
+  }
+  fmt.Printf("TestDetectSingleCharacterXOR - Succeeded\n")
 }
