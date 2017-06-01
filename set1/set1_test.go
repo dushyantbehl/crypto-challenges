@@ -43,16 +43,33 @@ func TestDecodeSingleByteXOR(t *testing.T) {
   if err != nil || key != 'X' {
     t.Errorf("TestDecodeSingleByteXOR FAILED\n")
   }
-  fmt.Printf("Possible Outcome - Encryption key - %v, Decoded text - %v\n",key,text)
   fmt.Printf("TestDecodeSingleByteXOR - Succeeded\n")
+  fmt.Printf("Possible Outcome - Encryption key - %v, Decoded text - %v\n",key,text)
 }
 
 func TestDetectSingleCharacterXOR(t *testing.T) {
   file := "4.txt"
 
-  _, _, err := DetectSingleCharacterXOR(file)
+  key, text, err := DetectSingleCharacterXOR(file)
   if err != nil {
     t.Errorf("TestDetectSingleCharacterXOR FAILED\n")
   }
   fmt.Printf("TestDetectSingleCharacterXOR - Succeeded\n")
+  fmt.Printf("Possible Outcome - Encryption key - %v, Decoded text - %v\n",key,text)
+}
+
+func TestRepeatingKeyXOR(t *testing.T) {
+  in := "Burning 'em, if you ain't quick and nimble\n"
+  in += "I go crazy when I hear a cymbal"
+
+  want := "0b3637272a2b2e63622c2e69692a23693a2a3c6324202d62"
+  want += "3d63343c2a26226324272765272a282b2f20430a652e2c65"
+  want += "2a3124333a653e2b2027630c692b20283165286326302e27282f"
+
+  got := RepeatingKeyXOR("ICE", in)
+
+  if got != want {
+    t.Errorf("TestRepeatingKeyXOR FAILED\n")
+  }
+  fmt.Printf("TestRepeatingKeyXOR - Succeeded\n")
 }

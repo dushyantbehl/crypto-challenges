@@ -15,6 +15,7 @@ func reverseByteSlice(a []byte) {
     }
 }
 
+/* This implementation is wrong, fix it. */
 func HexToBase64(in string) (out string, err error) {
     out = ""       // Initialize return value
 

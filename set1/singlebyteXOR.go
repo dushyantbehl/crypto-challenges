@@ -13,8 +13,8 @@ const MaxFloat64 = float64(^uint64(0))
 const charStart byte = 32
 const charEnd byte = 126
 
-// English single letter frequencies (in percent %)
-// Taken from - http://practicalcryptography.com/
+// English single letter frequencies (in percent)
+// Taken from Wikipedia
 var english_monogram_freq = map[byte]float64{
   'a':8.167,   'k':0.772,   'u':2.758,
   'b':1.492,   'l':4.025,   'v':0.978,
@@ -28,6 +28,8 @@ var english_monogram_freq = map[byte]float64{
   'j':0.153,   't':9.056,
 }
 
+// Characters which could be present in text
+// but don't count towards chiSquaredScore
 var ascii_ignored_characters = map[byte]int {
   // Null, HT, LF, VT, CR, Space
   0:1, 9:1, 10:1, 11:1, 13:1, 32:1,
@@ -56,7 +58,8 @@ func ChiSquaredStatisticScore(str string) (float64) {
       continue;
     }
     if char < 'A' || (char > 'Z' && char < 'a') || char > 'z' {
-      // Ignore non alphabetic characters
+      // If this char is still not an alphabet, it's very less chance
+      // that it'll be present in english string
       return MaxFloat64
     }
     if char >= 'A' && char <= 'Z' {  // Convert to lower case
@@ -111,7 +114,6 @@ func DecodeSingleByteXOR(str string) (score float64, key byte, text string, err 
 }
 
 func DetectSingleCharacterXOR(filename string) (key byte, text string, err error) {
-
   score := MaxFloat64
   f, err := os.Open(filename)
   if err != nil {
@@ -136,6 +138,5 @@ func DetectSingleCharacterXOR(filename string) (key byte, text string, err error
       text = t
     }
   }
-  fmt.Printf("Possible Outcome - Encryption key - %v, Decoded text - %v\n",key,text)
   return key, text, nil
 }
