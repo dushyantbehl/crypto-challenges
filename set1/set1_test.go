@@ -15,6 +15,7 @@ func TestFixedXOR(t *testing.T) {
 
     if err != nil || got != want {
         t.Errorf("TestFixedXOR FAILED\n")
+        return
     }
     fmt.Printf("TestFixedXOR - Succeeded\n")
 }
@@ -31,6 +32,7 @@ func TestHexToBase64(t *testing.T) {
 
     if err != nil || got != want {
         t.Errorf("TestHexToBase64 FAILED\n")
+        return
     }
     fmt.Printf("TestHexToBase64 - Succeeded\n")
 }
@@ -42,6 +44,7 @@ func TestDecodeSingleByteXOR(t *testing.T) {
   _, key, text, err := DecodeSingleByteXOR(in)
   if err != nil || key != 'X' {
     t.Errorf("TestDecodeSingleByteXOR FAILED\n")
+    return
   }
   fmt.Printf("TestDecodeSingleByteXOR - Succeeded\n")
   fmt.Printf("Possible Outcome - Encryption key - %v, Decoded text - %v\n",key,text)
@@ -53,6 +56,7 @@ func TestDetectSingleCharacterXOR(t *testing.T) {
   key, text, err := DetectSingleCharacterXOR(file)
   if err != nil {
     t.Errorf("TestDetectSingleCharacterXOR FAILED\n")
+    return
   }
   fmt.Printf("TestDetectSingleCharacterXOR - Succeeded\n")
   fmt.Printf("Possible Outcome - Encryption key - %v, Decoded text - %v\n",key,text)
@@ -70,6 +74,7 @@ func TestRepeatingKeyXOR(t *testing.T) {
 
   if got != want {
     t.Errorf("TestRepeatingKeyXOR FAILED\n")
+    return
   }
   fmt.Printf("TestRepeatingKeyXOR - Succeeded\n")
 }
